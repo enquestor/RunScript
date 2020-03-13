@@ -6,7 +6,7 @@ readonly compiler='g++' # gcc or g++
 readonly cpp_version='c++17'
 
 source_filename="$1"
-if [ "$2" == "-o" ] ; then
+if [ "$2" = '-o' ] ; then
 	output_to_file=1
 fi
 
@@ -35,13 +35,13 @@ mv a.out "$clean_filename$program_filename_extension"
 echo [run] Executing ...
 
 if [ -f "$clean_filename".in ] ; then
-	if [ "$output_to_file" == 1 ] ; then 
+	if [ "$output_to_file" = 1 ] ; then 
 		./"$clean_filename$program_filename_extension" < "$clean_filename".in > "$clean_filename".out
 	else
 		./"$clean_filename$program_filename_extension" < "$clean_filename".in
 	fi
 else
-	if [ "$output_to_file" == 1 ] ; then
+	if [ "$output_to_file" = 1 ] ; then
 		./"$clean_filename$program_filename_extension" > "$clean_filename".out
 	else
 		./"$clean_filename$program_filename_extension"
