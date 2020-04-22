@@ -12,7 +12,7 @@ fi
 
 # Find File
 if [ -z "$source_filename" ] ; then
-	source_filename=$(ls -lt | grep -E -- '.cpp|.cc' | awk '{ print $9 }')
+	source_filename=$(ls -lt | grep -E -- '.cpp|.cc' | sed -n 1p | awk '{ print $9 }')
 fi
 if [ ! -f "$source_filename" ] ; then
 	echo [run] File "$source_filename" does not exist.
