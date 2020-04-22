@@ -1,9 +1,9 @@
 #!/bin/sh
 
-readonly default_filename='a.cc'
 readonly program_filename_extension=''
 readonly compiler='g++' # gcc or g++
 readonly cpp_version='c++17'
+readonly remove_exec='1'
 
 source_filename="$1"
 if [ "$2" = '-o' ] ; then
@@ -12,7 +12,7 @@ fi
 
 # Find File
 if [ -z "$source_filename" ] ; then
-	source_filename="$default_filename"
+	source_filename=$(ls -lt | sed -n 2p | awk '{ print $9 }')
 fi
 if [ ! -f "$source_filename" ] ; then
 	echo [run] File "$source_filename" does not exist.
@@ -34,16 +34,22 @@ mv a.out "$clean_filename$program_filename_extension"
 # Execute
 echo [run] Executing ...
 
+exec="$clean_filename$program_filename_extension"
+
 if [ -f "$clean_filename".in ] ; then
 	if [ "$output_to_file" = 1 ] ; then 
-		./"$clean_filename$program_filename_extension" < "$clean_filename".in > "$clean_filename".out
+		./"$exec" < "$clean_filename".in > "$clean_filename".out
 	else
-		./"$clean_filename$program_filename_extension" < "$clean_filename".in
+		./"$exec" < "$clean_filename".in
 	fi
 else
 	if [ "$output_to_file" = 1 ] ; then
-		./"$clean_filename$program_filename_extension" > "$clean_filename".out
+		./"$exec" > "$clean_filename".out
 	else
-		./"$clean_filename$program_filename_extension"
+		./"$exec"
 	fi
+fi
+
+if [ "$remove_exec" = 1 ] ; then
+	rm "$exec"
 fi
