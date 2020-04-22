@@ -1,7 +1,7 @@
 #!/bin/sh
 
 readonly username=$(who am i | awk '{ print $1 }')
-readonly runpath="/Users/$username/.runsciprt"
+readonly runpath="/Users/$username/.runscript"
 
 # remove if folder exists
 installed=$(ls -al /Users/"$username"/ | grep .runscript | wc -l | awk '{ print $1 }')
