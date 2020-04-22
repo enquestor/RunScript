@@ -1,9 +1,10 @@
 #!/bin/sh
 
-readonly program_filename_extension=''
+readonly exec_filename_extension=''
 readonly compiler='g++' # gcc or g++
 readonly cpp_version='c++17'
 readonly remove_exec='1'
+readonly source_filename_extensions='.cpp|.cc'
 
 source_filename="$1"
 if [ "$2" = '-o' ] ; then
@@ -12,7 +13,7 @@ fi
 
 # Find File
 if [ -z "$source_filename" ] ; then
-	source_filename=$(ls -lt | sed -n 2p | awk '{ print $9 }')
+	source_filename=$(ls -lt | grep -E -- "'$source_filename_extensions'" | awk '{ print $9 }')
 fi
 if [ ! -f "$source_filename" ] ; then
 	echo [run] File "$source_filename" does not exist.
@@ -29,12 +30,12 @@ if [ "$compilation_result" != 0 ] ; then
 	echo [run] Compilation Error.
 	exit
 fi
-mv a.out "$clean_filename$program_filename_extension"
+
+exec="$clean_filename$exec_filename_extension"
+mv a.out "$exec"
 
 # Execute
 echo [run] Executing ...
-
-exec="$clean_filename$program_filename_extension"
 
 if [ -f "$clean_filename".in ] ; then
 	if [ "$output_to_file" = 1 ] ; then 
