@@ -4,7 +4,6 @@ readonly exec_filename_extension=''
 readonly compiler='g++' # gcc or g++
 readonly cpp_version='c++17'
 readonly remove_exec='1'
-readonly source_filename_extensions='.cpp|.cc'
 
 source_filename="$1"
 if [ "$2" = '-o' ] ; then
@@ -13,7 +12,7 @@ fi
 
 # Find File
 if [ -z "$source_filename" ] ; then
-	source_filename=$(ls -lt | grep -E -- "'$source_filename_extensions'" | awk '{ print $9 }')
+	source_filename=$(ls -lt | grep -E -- '.cpp|.cc' | awk '{ print $9 }')
 fi
 if [ ! -f "$source_filename" ] ; then
 	echo [run] File "$source_filename" does not exist.
