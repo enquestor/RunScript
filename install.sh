@@ -13,7 +13,7 @@ fi
 git clone https://github.com/Allen-Hu/RunScript.git "$runpath"
 
 # add folder to path
-has_path=$(cat /etc/paths | grep "runpath" | wc -l | awk '{ print $1 }')
+has_path=$(cat /etc/paths | grep "$runpath" | wc -l | awk '{ print $1 }')
 if [ "$has_path" = 0 ] ; then
 	sh -c "echo $runpath >> /etc/paths"
 fi
